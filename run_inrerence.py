@@ -15,10 +15,49 @@ colors = {"center": (0, 0, 0),
           "right_side": (255, 255, 0),
           "left_side": (255, 0, 0)}
 
-pb_file = '/home/kota/src/object_detection_demo_flow/frozen_inference_graph.pb'
-img_dir = '/home/kota/dat/cnn/training/via-2.0.10/images/20200812_wooden/rgb/'
 
-if __name__ == '__main__':
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Visualize inferenece results"
+    )
+
+    parser.add_argument(
+        "-p", "--pb_file",
+        help="Path to the pb file",
+        type=str,
+        default="graph.pb"
+    )
+    parser.add_argument(
+        "-i",
+        "--image_dir",
+        help="Path to the input image folder",
+        type=str,
+    )
+    parser.add_argument(
+        "--min_score",
+        help="Minimum score of the detected boxes to show",
+        type=float,
+        default = 0.2
+    )
+
+    args = parser.parse_args()
+
+    return args
+
+
+def writeConfidence(img, val, x, y, class_name):
+    pos = (x, y - 20)
+    col = colors[class_name]
+    str_val = "{:.2f}".format(val)
+    cv2.putText(img, str_val, pos, cv2.FONT_HERSHEY_SIMPLEX, 1, col, 2)
+
+
+def main():
+    args = parse_args()
+    pb_file = args.pb_file
+    image_dir = args.image_dir
+    min_score = args.min_score
+
     # Read the graph.
     with tf.gfile.FastGFile(pb_file, 'rb') as f:
         graph_def = tf.GraphDef()
@@ -33,10 +72,10 @@ if __name__ == '__main__':
         sess.graph.as_default()
         tf.import_graph_def(graph_def, name='')
 
-        imgs = [img_file for img_file in os.listdir(img_dir)
-                    if (img_file.endswith(".png") or img_file.endswith(".jpg"))]
+        imgs = [img_file for img_file in os.listdir(image_dir)
+                    if os.path.splitext(img_file)[1] in [".png", ".jpg"]]
         for img_file in imgs:
-            img_path = os.path.join(img_dir, img_file)
+            img_path = os.path.join(image_dir, img_file)
 
             # Read and preprocess an image.
             img = cv2.imread(img_path)
@@ -59,16 +98,18 @@ if __name__ == '__main__':
                     continue
                 found.add(class_name)
 
-                # classId = int(out[3][0][i])
-                # score = float(out[1][0][i])
-                bbox = [float(v) for v in out[2][0][i]]
+                score = float(out[1][0][i])
+                if score < min_score:  # Already sorted
+                    break
 
+                bbox = [float(v) for v in out[2][0][i]]
                 x = int(bbox[1] * cols)
                 y = int(bbox[0] * rows)
                 right = int(bbox[3] * cols)
                 bottom = int(bbox[2] * rows)
 
                 cv2.rectangle(img, (x, y), (right, bottom), colors[class_name], thickness=2)
+                writeConfidence(img, score, x, y, class_name)
 
                 if len(found) == len(classes):
                     break
@@ -79,3 +120,6 @@ if __name__ == '__main__':
 
             if k == 27:
                 break
+
+if __name__ == '__main__':
+    main()
