@@ -40,30 +40,25 @@ Train folder contains the 80% of the dataset while test and final_test the remai
 
 ### Training the neural network
 launch the training notebook:
-        ```
+
         jupyter notebook train.ipynb
-        ```
+
 Execute each cell monitoring the result. The process takes at least a couple of hours.
 
 ### Run the inference to test the result
 Run the local python script (it's not a python notebook):
 
-        ```
         python run_inference.py -p [pb file path] -i [input image dir]
-        ```
 
 pb file is referred to frozen_model_graph
 
 ### Conversion to blob for OAK-D board
 ## Convert th model to an intermediate format IR.
-        ```
+        
         cd to_folder_where_frozen_inference_graph.pb
-        ```
-
-        ```
+    
         mkdir convertedFiles
-        ```
-
+        
 execute the python command:
 
 ```
@@ -84,8 +79,7 @@ to generate the blob goes to the folder where you saved the xml at prev step (e.
 ### Data Conversion
 Annotation data have to be converted from json format to xml. Under the folder dataConversionScript use the json2xml.py script:
 
-        ```
         python3 via2coco.py -i [path_to__annotation_file.json] -p [destination_folder]
-        ```
-        
+    
+
 If more images have to be merged in the same folder for the train and test process it may be possible they share the same name. To solve this problem use the script updateFilename.py in dataConversionScriptFolder. Launch this script from the folder where mages and xml files are saved. This will update image and xml filename attaching the current folder name to the actual name plus updates the xml file content.
