@@ -23,10 +23,14 @@ The class to be detected are:
 Dataset is organized in the following way:
        object_detection_demo_flow
 
-├── data                  
-    ├── images                   
+├── data  
+
+    ├── images  
+
         ├── train 
+
         ├── test 
+        
         ├── final_test 
 
 Train folder contains the 80% of the dataset while test and final_test the remaining 20%. In final_test folder only images and not xml files are saved.
