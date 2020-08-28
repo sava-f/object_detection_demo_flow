@@ -10,14 +10,13 @@ https://colab.research.google.com/github/luxonis/depthai-ml-training/blob/master
 
 Log into opecv machine:
         - ssh opencv@10.81.1.118  psw: opencv
-
-run the conda:
+source conda environment:
         - su_conda
 activate the proper environment
         - conda activate ssd
 ### Data-set organization
 Images are in 1920X1080 format. The annotation is made using: http://www.robots.ox.ac.uk/~vgg/software/via/. The output is in Json format. Since for training we need xml format we have scripts for handling the conversion. Refer to section Data Conversion.
-The class to be detected are:
+The class to detect are:
 -right hole -left side -right side -center
 
 Dataset is organized in the following way:
@@ -44,18 +43,26 @@ launch the training notebook:
         ```
         jupyter notebook train.ipynb
         ```
+Execute each cell monitoring the result. The process takes at least a couple of hours.
+
 ### Run the inference to test the result
-Run the python script:
+Run the local python script (it's not a python notebook):
+
         ```
         python run_inference.py -p [pb file path] -i [input image dir]
         ```
+
 pb file is referred to frozen_model_graph
 
 ### Conversion to blob for OAK-D board
 ## Convert th model to an intermediate format IR.
+        ```
+        cd to_folder_where_frozen_inference_graph.pb
+        ```
 
-cd to the folder where the frozen_inference_graph.pb is stored
-mkdir convertedFiles
+        ```
+        mkdir convertedFiles
+        ```
 
 execute the python command:
 
@@ -76,7 +83,9 @@ to generate the blob goes to the folder where you saved the xml at prev step (e.
 
 ### Data Conversion
 Annotation data have to be converted from json format to xml. Under the folder dataConversionScript use the json2xml.py script:
+
         ```
         python3 via2coco.py -i [path_to__annotation_file.json] -p [destination_folder]
         ```
+        
 If more images have to be merged in the same folder for the train and test process it may be possible they share the same name. To solve this problem use the script updateFilename.py in dataConversionScriptFolder. Launch this script from the folder where mages and xml files are saved. This will update image and xml filename attaching the current folder name to the actual name plus updates the xml file content.
