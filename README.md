@@ -30,7 +30,7 @@ Dataset is organized in the following way:
         ├── train 
 
         ├── test 
-        
+
         ├── final_test 
 
 Train folder contains the 80% of the dataset while test and final_test the remaining 20%. In final_test folder only images and not xml files are saved.
@@ -55,6 +55,7 @@ mkdir convertedFiles
 
 execute the python command:
 
+```
 python /opt/intel/openvino/deployment_tools/model_optimizer/mo.py \
 --input_model frozen_inference_graph.pb \
 --tensorflow_use_custom_operations_config /opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/ssd_v2_support.json \
@@ -62,10 +63,12 @@ python /opt/intel/openvino/deployment_tools/model_optimizer/mo.py \
 --reverse_input_channels \
 --output_dir ./convertedFiles\
 --data_type FP16
+```
 
+```
 to generate the blob goes to the folder where you saved the xml at prev step (e.g. frozen_inference_graph.xmlconvertedFiles)
 /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/myriad_compile -m ./frozen_inference_graph.xml -o frozenGraph.blob -ip U8 -VPU_MYRIAD_PLATFORM VPU_MYRIAD_2480 -VPU_NUMBER_OF_SHAVES 4 -VPU_NUMBER_OF_CMX_SLICES 4
-
+```
 
 ### Data Conversion
 Annotation data have to be converted from json format to xml. Under the folder dataConversionScript use the json2xml.py script:
