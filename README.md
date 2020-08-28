@@ -61,3 +61,9 @@ to generate the blob goes to the folder where you saved the xml at prev step (e.
 /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/myriad_compile -m ./frozen_inference_graph.xml -o frozenGraph.blob -ip U8 -VPU_MYRIAD_PLATFORM VPU_MYRIAD_2480 -VPU_NUMBER_OF_SHAVES 4 -VPU_NUMBER_OF_CMX_SLICES 4
 
 
+### Data Conversion
+Annotation data have to be converted from json format to xml. Under the folder dataConversionScript use the json2xml.py script:
+
+        -python3 via2coco.py -i [path_to__annotation_file.json] -p [destination_folder]
+
+If more images have to be merged in the same folder for the train and test process it may be possible they share the same name. To solve this problem use the script updateFilename.py in dataConversionScriptFolder. Launch this script from the folder where mages and xml files are saved. This will update image and xml filename attaching the current folder name to the actual name plus updates the xml file content.
