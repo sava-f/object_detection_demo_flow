@@ -23,6 +23,7 @@ The class to be detected are:
 Dataset is organized in the following way:
        object_detection_demo_flow
 
+```
 ├── data  
 
     ├── images  
@@ -32,6 +33,7 @@ Dataset is organized in the following way:
         ├── test 
 
         ├── final_test 
+```
 
 Train folder contains the 80% of the dataset while test and final_test the remaining 20%. In final_test folder only images and not xml files are saved.
 
@@ -39,12 +41,14 @@ Train folder contains the 80% of the dataset while test and final_test the remai
 
 ### Training the neural network
 launch the training notebook:
-        - jupyter notebook train.ipynb
-
+        ```
+        jupyter notebook train.ipynb
+        ```
 ### Run the inference to test the result
 Run the python script:
-- python run_inference.py -p [pb file path] -i [input image dir]
-
+        ```
+        python run_inference.py -p [pb file path] -i [input image dir]
+        ```
 pb file is referred to frozen_model_graph
 
 ### Conversion to blob for OAK-D board
@@ -72,7 +76,7 @@ to generate the blob goes to the folder where you saved the xml at prev step (e.
 
 ### Data Conversion
 Annotation data have to be converted from json format to xml. Under the folder dataConversionScript use the json2xml.py script:
-
-        -python3 via2coco.py -i [path_to__annotation_file.json] -p [destination_folder]
-
+        ```
+        python3 via2coco.py -i [path_to__annotation_file.json] -p [destination_folder]
+        ```
 If more images have to be merged in the same folder for the train and test process it may be possible they share the same name. To solve this problem use the script updateFilename.py in dataConversionScriptFolder. Launch this script from the folder where mages and xml files are saved. This will update image and xml filename attaching the current folder name to the actual name plus updates the xml file content.
