@@ -69,7 +69,8 @@ execute the python command:
         --output_dir ./convertedFiles\
         --data_type FP16
 
-to generate the blob goes to the folder where you saved the xml at prev step (e.g. frozen_inference_graph.xmlconvertedFiles)
+To generate the blob goes to the folder where you saved the xml at prev step (e.g. frozen_inference_graph.xmlconvertedFiles)
+
         /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/myriad_compile -m ./frozen_inference_graph.xml -o frozenGraph.blob -ip U8 -VPU_MYRIAD_PLATFORM VPU_MYRIAD_2480 -VPU_NUMBER_OF_SHAVES 4 -VPU_NUMBER_OF_CMX_SLICES 4
 
 
