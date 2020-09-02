@@ -40,10 +40,16 @@ Train folder contains the 80% of the dataset while test and final_test the remai
 
 ### Training the neural network
 launch the training notebook:
+Use the train.py script.
+        
+        python train.py
 
-        jupyter notebook train.ipynb
-
-Execute each cell monitoring the result. The process takes at least a couple of hours.
+Arguments (not mandatory) are:
+- "-tr", "--train" = folder containing training data (default = ./data/images/train)
+- "-te", "--test" = folder containing test data (default = ./data/images/test)
+- "-ft", "--final" = folder containing final test data ( default = ./data/images/final_test)
+-  "-ns", "--nsteps" = number of steps/epochs (default = 5000)
+- "-es", "--estep" = evaluation steps (default = 50)
 
 ### Run the inference to test the result
 Run the local python script (it's not a python notebook):
