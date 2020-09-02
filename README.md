@@ -75,9 +75,15 @@ To generate the blob goes to the folder where you saved the xml at prev step (e.
 
 
 ### Data Conversion
-Annotation data have to be converted from json format to xml. Under the folder dataConversionScript use the json2xml.py script:
+Annotation data have to be converted from json format to xml. Under the folder utils use the json2xml.py script:
 
         python3 via2coco.py -i [path_to__annotation_file.json] -p [destination_folder]
     
 
 If more images have to be merged in the same folder for the train and test process it may be possible they share the same name. To solve this problem use the script updateFilename.py in dataConversionScriptFolder. Launch this script from the folder where mages and xml files are saved. This will update image and xml filename attaching the current folder name to the actual name plus updates the xml file content.
+
+### Utils folder
+Contain useful script for data manipulation:
+- json2xml.py = convert the annotation data from json to xml
+- resize_images.py = change image size
+- updateFilename.py = concatenate folder name and image name and update also the xml annotation file
