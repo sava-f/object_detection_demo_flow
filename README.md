@@ -51,6 +51,12 @@ Arguments (not mandatory) are:
 -  "-ns", "--nsteps" = number of steps/epochs (default = 5000)
 - "-es", "--estep" = evaluation steps (default = 50)
 
+To visualize results use Tensorboard. 
+To launch it run: 
+        
+        tensorbod --logdir=absolute_path_to_training_folder
+
+Please launch it without activate any conda environment (this will be fixed in the future)
 ### Run the inference to test the result
 Run the local python script (it's not a python notebook):
 
